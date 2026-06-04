@@ -1,80 +1,82 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Fibre - Commune de Tiznit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <section class="login-screen" id="loginScreen">
     <div class="login-card">
       <div class="login-brand">
-        <div class="brand-icon"><span></span><span></span><span></span></div>
+        <div class="logo-mark"><span></span><span></span><span></span></div>
         <div>
           <h1>FIBER</h1>
-          <p>Commune Tiznit</p>
+          <p data-i18n="brandSubtitle">Commune Tiznit</p>
         </div>
       </div>
-      <h2>Connexion Admin</h2>
-      <p class="login-subtitle">Accédez au tableau de bord de gestion fibre.</p>
+
+      <h2 data-i18n="loginTitle">Connexion Admin</h2>
+      <p class="muted" data-i18n="loginSubtitle">Accédez au tableau de bord de gestion fibre.</p>
+
       <form id="loginForm">
-        <label>Nom d'utilisateur
-          <input id="username" placeholder="admin" autocomplete="username" required />
+        <label>
+          <span data-i18n="username">Nom d'utilisateur</span>
+          <input id="usernameInput" value="admin" autocomplete="username" required />
         </label>
-        <label>Mot de passe
-          <input id="password" type="password" placeholder="admin123" autocomplete="current-password" required />
+        <label>
+          <span data-i18n="password">Mot de passe</span>
+          <input id="passwordInput" type="password" value="admin123" autocomplete="current-password" required />
         </label>
-        <button class="primary-btn login-btn" type="submit">Se connecter</button>
-        <div class="login-hint">Demo: <strong>admin</strong> / <strong>admin123</strong></div>
-        <div class="form-error" id="loginError"></div>
+        <button class="btn primary full" type="submit" data-i18n="loginButton">Se connecter</button>
+        <div class="hint"><span data-i18n="demoAccount">Compte demo</span>: <strong>admin</strong> / <strong>admin123</strong></div>
+        <div class="error" id="loginError"></div>
       </form>
     </div>
   </section>
 
-  <div class="app-shell" id="appShell">
+  <div class="shell" id="appShell">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
-        <div class="brand-icon">
-          <span></span><span></span><span></span>
-        </div>
+        <div class="logo-mark"><span></span><span></span><span></span></div>
         <div>
           <h1>FIBER</h1>
-          <p>Commune Tiznit</p>
+          <p data-i18n="brandSubtitle">Commune Tiznit</p>
         </div>
       </div>
 
       <nav class="nav">
-        <button class="nav-link active" data-page="dashboard"><span>⌂</span> <em data-i18n="navDashboard">Dashboard</em></button>
-        <button class="nav-link" data-page="routeurs"><span>▰</span> <em data-i18n="navRouters">Routeurs</em></button>
-        <button class="nav-link" data-page="transferts"><span>⇄</span> <em data-i18n="navTransfers">Transferts</em></button>
-        <button class="nav-link" data-page="problemes"><span>⚠</span> <em data-i18n="navProblems">Les problèmes</em></button>
-        <button class="nav-link" data-page="rapports"><span>📄</span> <em data-i18n="navReports">Rapports</em></button>
-        <button class="nav-link" data-page="parametres"><span>⚙</span> <em data-i18n="navSettings">Paramètres</em></button>
+        <button class="nav-link active" data-page="dashboard"><span>⌂</span><em data-i18n="navDashboard">Dashboard</em></button>
+        <button class="nav-link" data-page="routeurs"><span>▰</span><em data-i18n="navRouters">Routeurs</em></button>
+        <button class="nav-link" data-page="transferts"><span>⇄</span><em data-i18n="navTransfers">Transferts</em></button>
+        <button class="nav-link" data-page="problemes"><span>⚠</span><em data-i18n="navProblems">Les problèmes</em></button>
+        <button class="nav-link" data-page="rapports"><span>📄</span><em data-i18n="navReports">Rapports</em></button>
+        <button class="nav-link" data-page="parametres"><span>⚙</span><em data-i18n="navSettings">Paramètres</em></button>
       </nav>
 
-      <div class="sidebar-foot">
-        <div class="mini-info">
-          <small>Session</small>
-          <strong>Admin connecté</strong>
+      <div class="sidebar-footer">
+        <div class="session-card">
+          <small data-i18n="session">Session</small>
+          <strong data-i18n="adminOnline">Admin connecté</strong>
         </div>
-        <div class="user-box">
+        <div class="profile">
           <div class="avatar">A</div>
           <div>
             <strong>Admin</strong>
-            <p>Administrateur</p>
+            <p data-i18n="administrator">Administrateur</p>
           </div>
-          <button class="logout-mini" id="logoutMini" title="Logout">⎋</button>
+          <button class="icon-btn" id="logoutMini" title="Logout">⎋</button>
         </div>
       </div>
     </aside>
 
-    <main class="app">
+    <main class="main">
       <header class="topbar">
-        <div class="left-top">
+        <div class="top-left">
           <button class="menu-btn" id="menuBtn">☰</button>
           <div>
             <h2 id="pageTitle">Dashboard</h2>
@@ -82,151 +84,111 @@
           </div>
         </div>
         <div class="top-actions">
-          <div class="date-pill">📅 <span>04 Juin 2026</span></div>
-          <button class="primary-btn" id="quickTransfer">⇄ <span data-i18n="transferRequest">Demande de transfert</span></button>
+          <div class="pill">📅 <span>04 Juin 2026</span></div>
+          <button class="btn primary" id="quickTransfer">⇄ <span data-i18n="transferRequest">Demande de transfert</span></button>
           <button class="notif" data-page-link="problemes">🔔<b id="notifCount">0</b></button>
-          <button class="logout-btn" id="logoutBtn" data-i18n="logout">Logout</button>
+          <button class="btn danger-soft" id="logoutBtn" data-i18n="logout">Logout</button>
         </div>
       </header>
 
       <section class="page active" id="dashboard">
         <div class="stats-grid">
-          <article class="stat-card blue">
-            <div class="stat-icon">👥</div>
-            <div class="stat-body">
-              <p>Total lignes</p>
-              <h3 id="totalLines">0</h3>
-              <small>Lignes réseau enregistrées</small>
-              <div class="mini-line"><span style="width:78%"></span></div>
+          <article class="stat-card">
+            <div class="stat-icon users">👥</div>
+            <div>
+              <p data-i18n="totalLines">Total lignes</p>
+              <h3 id="totalLinesValue">0</h3>
+              <small data-i18n="registeredLines">Lignes réseau enregistrées</small>
             </div>
           </article>
-          <article class="stat-card green">
-            <div class="stat-icon">▰</div>
-            <div class="stat-body">
-              <p>Total routeurs</p>
-              <h3 id="totalRouters">0</h3>
-              <small>Routeurs / lignes actifs</small>
-              <div class="mini-line"><span style="width:74%"></span></div>
+          <article class="stat-card">
+            <div class="stat-icon router">▰</div>
+            <div>
+              <p data-i18n="totalRouters">Total routeurs</p>
+              <h3 id="totalRoutersValue">0</h3>
+              <small data-i18n="activeRouters">Routeurs / lignes actifs</small>
             </div>
           </article>
-          <article class="stat-card orange">
-            <div class="stat-icon">💰</div>
-            <div class="stat-body">
-              <p>Total charge</p>
-              <h3 id="totalCharge">0</h3>
-              <small>Montant total abonnements</small>
-              <div class="mini-line"><span style="width:84%"></span></div>
+          <article class="stat-card">
+            <div class="stat-icon money">💰</div>
+            <div>
+              <p data-i18n="totalCharge">Total charge</p>
+              <h3 id="totalChargeValue">0</h3>
+              <small data-i18n="subscriptionsAmount">Montant total abonnements</small>
             </div>
           </article>
-          <article class="stat-card red">
-            <div class="stat-icon">⚠</div>
-            <div class="stat-body">
-              <p>Problèmes ouverts</p>
-              <h3 id="problemCount">0</h3>
-              <small>Signalements à traiter</small>
-              <div class="mini-line"><span id="problemLine" style="width:18%"></span></div>
+          <article class="stat-card">
+            <div class="stat-icon warning">⚠</div>
+            <div>
+              <p data-i18n="openProblems">Problèmes ouverts</p>
+              <h3 id="problemCountValue">0</h3>
+              <small data-i18n="reportsToProcess">Signalements à traiter</small>
             </div>
           </article>
         </div>
 
-        <div class="stats-grid small-stats">
-          <article class="mini-card"><span>🌐</span><div><strong id="fiberCount">0</strong><p>Fibre optique</p></div></article>
-          <article class="mini-card"><span>📶</span><div><strong id="internetCount">0</strong><p>Internet</p></div></article>
-          <article class="mini-card"><span>⇄</span><div><strong id="transferCountTop">0</strong><p>Transferts ouverts</p></div></article>
-          <article class="mini-card"><span>✅</span><div><strong id="resolvedCount">0</strong><p>Problèmes résolus</p></div></article>
+        <div class="mini-grid">
+          <article><span>🌐</span><strong id="fiberCountValue">0</strong><p data-i18n="fiberOptic">Fibre optique</p></article>
+          <article><span>📶</span><strong id="internetCountValue">0</strong><p data-i18n="internet">Internet</p></article>
+          <article><span>⇄</span><strong id="transferCountValue">0</strong><p data-i18n="openTransfers">Transferts ouverts</p></article>
+          <article><span>✅</span><strong id="resolvedCountValue">0</strong><p data-i18n="resolvedProblems">Problèmes résolus</p></article>
         </div>
 
-        <div class="dashboard-layout">
-          <div class="main-column">
-            <section class="panel">
-              <div class="panel-head wrap-mobile">
-                <div>
-                  <h3>Dernières lignes du réseau</h3>
-                  <p>Vue rapide sur les lignes principales importées depuis Excel.</p>
-                </div>
-                <div class="head-actions">
-                  <button class="ghost-btn" data-page-link="routeurs">Voir toutes les lignes</button>
-                </div>
+        <div class="dashboard-grid">
+          <section class="panel large">
+            <div class="panel-head">
+              <div>
+                <h3 data-i18n="latestLines">Dernières lignes du réseau</h3>
+                <p data-i18n="latestLinesDesc">Vue rapide sur les lignes principales importées depuis Excel.</p>
               </div>
-              <div class="table-wrap"><table id="latestTable"></table></div>
-            </section>
+              <button class="btn ghost" data-page-link="routeurs" data-i18n="viewAllLines">Voir toutes les lignes</button>
+            </div>
+            <div class="table-wrap"><table id="latestTable"></table></div>
+          </section>
 
-            <section class="panel">
-              <div class="panel-head wrap-mobile">
-                <div>
-                  <h3>Lignes 50 Mbps / attention</h3>
-                  <p>Repérage rapide des lignes qui peuvent demander un suivi.</p>
-                </div>
-                <span class="badge soft" id="slowCountBadge">0 lignes</span>
+          <section class="panel action-panel">
+            <h3 data-i18n="transferFiber">Transférer la fibre</h3>
+            <p data-i18n="transferDesc">Créez une demande quand un client change d'adresse ou de bureau.</p>
+            <button class="btn primary full big" id="openTransfer">⇄ <span data-i18n="transferFiber">Transférer la fibre</span></button>
+            <div class="info" data-i18n="autoOldAddress">L'ancienne adresse est remplie automatiquement.</div>
+          </section>
+
+          <section class="panel large">
+            <div class="panel-head">
+              <div>
+                <h3 data-i18n="linesAttention">Lignes à vérifier</h3>
+                <p data-i18n="linesAttentionDesc">Seules les lignes marquées dans Excel apparaissent ici.</p>
               </div>
-              <div class="table-wrap"><table id="waitingTable"></table></div>
-            </section>
+              <span class="badge soft" id="problemLineBadge">0</span>
+            </div>
+            <div class="table-wrap"><table id="attentionTable"></table></div>
+          </section>
 
-            <section class="panel">
-              <div class="panel-head wrap-mobile">
-                <div>
-                  <h3>Derniers problèmes</h3>
-                  <p>Rapport rapide des signalements récents.</p>
-                </div>
-                <button class="ghost-btn" data-page-link="rapports">Voir rapport</button>
-              </div>
-              <div class="table-wrap"><table id="miniProblemsTable"></table></div>
-            </section>
-          </div>
-
-          <div class="side-column">
-            <section class="panel action-panel">
-              <h3>Transférer la fibre</h3>
-              <p>Créez une demande quand un client change d'adresse ou de bureau.</p>
-              <button class="transfer-btn" id="openTransfer">⇄ Transférer la fibre</button>
-              <div class="info-box">ℹ L'ancienne adresse est remplie automatiquement.</div>
-            </section>
-
-            <section class="panel summary-panel">
-              <h3>Résumé réseau</h3>
-              <div class="summary-list">
-                <div><span>Lignes 100 Mbps</span><strong id="summary100">0</strong></div>
-                <div><span>Lignes 50 Mbps</span><strong id="summary50">0</strong></div>
-                <div><span>Charge fibre</span><strong id="fiberCharge">0 DH</strong></div>
-                <div><span>Charge internet</span><strong id="internetCharge">0 DH</strong></div>
-                <div><span>État global</span><strong class="ok-text" id="globalState">Stable</strong></div>
-              </div>
-            </section>
-
-            <section class="panel quick-panel">
-              <h3>Raccourcis rapides</h3>
-              <div class="quick-grid">
-                <button data-page-link="routeurs">▰<span>Voir routeurs</span></button>
-                <button id="shortcutTransfer">⇄<span>Nouveau transfert</span></button>
-                <button data-page-link="problemes">⚠<span>Signaler problème</span></button>
-                <button data-page-link="rapports">📄<span>Rapport</span></button>
-              </div>
-            </section>
-          </div>
+          <section class="panel">
+            <h3 data-i18n="networkSummary">Résumé réseau</h3>
+            <div class="summary-list">
+              <div><span>100 Mbps</span><strong id="summary100">0</strong></div>
+              <div><span>50 Mbps</span><strong id="summary50">0</strong></div>
+              <div><span data-i18n="fiberCharge">Charge fibre</span><strong id="fiberChargeValue">0 DH</strong></div>
+              <div><span data-i18n="internetCharge">Charge internet</span><strong id="internetChargeValue">0 DH</strong></div>
+              <div><span data-i18n="globalState">État global</span><strong id="globalStateValue" class="ok-text">Stable</strong></div>
+            </div>
+          </section>
         </div>
       </section>
 
       <section class="page" id="routeurs">
-        <div class="panel full">
-          <div class="panel-head wrap-mobile">
+        <div class="panel full-panel">
+          <div class="panel-head">
             <div>
-              <h3>Liste des lignes / routeurs</h3>
-              <p>Admin peut voir détails, modifier et supprimer.</p>
+              <h3 data-i18n="routersList">Liste des lignes / routeurs</h3>
+              <p data-i18n="routersDesc">Admin peut voir détails, modifier et supprimer.</p>
             </div>
-            <div class="filters-row">
-              <input class="search" id="routerSearch" placeholder="Rechercher par client, adresse..." />
-              <select class="search select-filter" id="typeFilter">
-                <option value="all">Tous les types</option>
-                <option value="Fibre">Fibre</option>
-                <option value="Internet">Internet</option>
-                <option value="Service">Service</option>
-              </select>
-              <select class="search select-filter" id="speedFilter">
-                <option value="all">Tous les débits</option>
-                <option value="100">100 Mbps</option>
-                <option value="50">50 Mbps</option>
-              </select>
-              <button class="primary-btn" id="addRouterBtn">+ Ajouter</button>
+            <div class="filters">
+              <input class="field" id="routerSearch" data-i18n-placeholder="searchPlaceholder" placeholder="Rechercher..." />
+              <select class="field" id="typeFilter"></select>
+              <select class="field" id="speedFilter"></select>
+              <button class="btn primary" id="addRouterBtn" data-i18n="add">Ajouter</button>
             </div>
           </div>
           <div class="table-wrap"><table id="routerTable"></table></div>
@@ -234,31 +196,31 @@
       </section>
 
       <section class="page" id="transferts">
-        <div class="panel full">
-          <div class="panel-head wrap-mobile">
+        <div class="panel full-panel">
+          <div class="panel-head">
             <div>
-              <h3>Demandes de transfert</h3>
-              <p>Gestion pratique des changements d'emplacement de la fibre.</p>
+              <h3 data-i18n="transferRequests">Demandes de transfert</h3>
+              <p data-i18n="transferRequestsDesc">Gestion des changements d'emplacement de la fibre.</p>
             </div>
-            <button class="primary-btn" id="newTransferBtn">⇄ Nouvelle demande</button>
+            <button class="btn primary" id="newTransferBtn">⇄ <span data-i18n="newRequest">Nouvelle demande</span></button>
           </div>
           <div class="table-wrap"><table id="transferTable"></table></div>
         </div>
       </section>
 
       <section class="page" id="problemes">
-        <div class="panel full">
-          <div class="panel-head wrap-mobile">
+        <div class="panel full-panel">
+          <div class="panel-head">
             <div>
-              <h3>Les problèmes</h3>
-              <p>Signalements avec priorité, détails, résolution et suppression.</p>
+              <h3 data-i18n="problems">Les problèmes</h3>
+              <p data-i18n="problemsDesc">Signalements avec priorité, détails, résolution et suppression.</p>
             </div>
-            <button class="danger-btn" id="addProblemBtn">⚠ Signaler un problème</button>
+            <button class="btn danger" id="addProblemBtn">⚠ <span data-i18n="reportProblem">Signaler un problème</span></button>
           </div>
-          <div class="empty-state" id="noProblems">
+          <div class="empty" id="noProblems">
             <div>✅</div>
-            <h3>Aucun problème ouvert</h3>
-            <p>Ajoutez un signalement si une ligne fibre ou internet rencontre un souci.</p>
+            <h3 data-i18n="noOpenProblem">Aucun problème ouvert</h3>
+            <p data-i18n="noOpenProblemDesc">Ajoutez un signalement si une ligne rencontre un souci.</p>
           </div>
           <div class="table-wrap"><table id="problemTable"></table></div>
         </div>
@@ -266,27 +228,22 @@
 
       <section class="page" id="rapports">
         <div class="report-grid">
-          <section class="panel report-card">
-            <h3>Rapport général</h3>
+          <section class="panel">
+            <h3 data-i18n="generalReport">Rapport général</h3>
             <div class="summary-list">
-              <div><span>Total routeurs</span><strong id="reportRouters">0</strong></div>
-              <div><span>Total charge</span><strong id="reportCharge">0 DH</strong></div>
-              <div><span>Problèmes ouverts</span><strong id="reportProblems">0</strong></div>
-              <div><span>Transferts ouverts</span><strong id="reportTransfers">0</strong></div>
+              <div><span data-i18n="totalRouters">Total routeurs</span><strong id="reportRouters">0</strong></div>
+              <div><span data-i18n="totalCharge">Total charge</span><strong id="reportCharge">0 DH</strong></div>
+              <div><span data-i18n="openProblems">Problèmes ouverts</span><strong id="reportProblems">0</strong></div>
+              <div><span data-i18n="openTransfers">Transferts ouverts</span><strong id="reportTransfers">0</strong></div>
             </div>
-            <button class="primary-btn full-btn" id="printReport">Imprimer rapport</button>
+            <button class="btn primary full print-btn" id="printReport" data-i18n="printReport">Imprimer rapport</button>
           </section>
           <section class="panel">
-            <div class="panel-head">
-              <div>
-                <h3>Rapport des problèmes</h3>
-                <p>Ce rapport s'affiche seulement quand il y a des signalements.</p>
-              </div>
-            </div>
-            <div class="empty-state" id="noReportProblems">
+            <h3 data-i18n="problemsReport">Rapport des problèmes</h3>
+            <div class="empty" id="noReportProblems">
               <div>✅</div>
-              <h3>Aucun problème à rapporter</h3>
-              <p>Le réseau est stable actuellement.</p>
+              <h3 data-i18n="noProblemToReport">Aucun problème à rapporter</h3>
+              <p data-i18n="networkStable">Le réseau est stable actuellement.</p>
             </div>
             <div class="table-wrap"><table id="reportProblemTable"></table></div>
           </section>
@@ -296,55 +253,55 @@
       <section class="page" id="parametres">
         <div class="settings-grid">
           <section class="panel">
-            <h3>Informations du projet</h3>
-            <div class="settings-list">
-              <p><strong>Projet :</strong> Dashboard Fibre</p>
-              <p><strong>Organisation :</strong> Commune de Tiznit</p>
-              <p><strong>Technologie :</strong> HTML / CSS / JavaScript</p>
-              <p><strong>Mode :</strong> GitHub Pages / Static</p>
-            </div>
-          </section>
-          <section class="panel">
-            <h3 data-i18n="settingsAppearance">Apparence & langue</h3>
-            <div class="settings-controls">
+            <h3 data-i18n="appearanceLanguage">Apparence & langue</h3>
+            <div class="settings-form">
               <label>
-                <span data-i18n="themeMode">Mode d'affichage</span>
-                <select id="themeSelect" class="search">
+                <span data-i18n="theme">Thème</span>
+                <select class="field" id="themeSelect">
                   <option value="light">White mode</option>
                   <option value="dark">Dark mode</option>
                 </select>
               </label>
               <label>
+                <span data-i18n="accentColor">Couleur principale</span>
+                <select class="field" id="accentSelect">
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                  <option value="purple">Purple</option>
+                  <option value="orange">Orange</option>
+                </select>
+              </label>
+              <label>
                 <span data-i18n="language">Langue</span>
-                <select id="languageSelect" class="search">
+                <select class="field" id="langSelect">
                   <option value="fr">Français</option>
                   <option value="ar">العربية</option>
                   <option value="en">English</option>
                 </select>
               </label>
             </div>
-            <div class="settings-note" data-i18n="settingsSaved">Les préférences sont sauvegardées automatiquement.</div>
+            <div class="info" data-i18n="settingsSaved">Les changements s'appliquent réellement et restent sauvegardés.</div>
+            <button class="btn ghost" id="resetSettingsBtn" data-i18n="resetSettings">Réinitialiser paramètres</button>
           </section>
 
           <section class="panel">
-            <h3 data-i18n="adminAccount">Compte admin demo</h3>
-            <div class="settings-list">
-              <p><strong>Username :</strong> admin</p>
-              <p><strong>Password :</strong> admin123</p>
-              <p><strong data-i18n="note">Remarque :</strong> <span data-i18n="loginNote">login front-end فقط للعرض، ماشي حماية حقيقية بحال PHP/Backend.</span></p>
+            <h3 data-i18n="adminAccount">Compte admin</h3>
+            <div class="summary-list">
+              <div><span>Username</span><strong>admin</strong></div>
+              <div><span>Password</span><strong>admin123</strong></div>
+              <div><span data-i18n="hosting">Hébergement</span><strong>GitHub Pages</strong></div>
+              <div><span data-i18n="storage">Stockage</span><strong>LocalStorage</strong></div>
             </div>
-            <div class="settings-actions">
-              <button class="danger-btn" id="clearDataBtn" data-i18n="clearData">Supprimer données ajoutées</button>
-              <button class="ghost-btn" id="resetSettingsBtn" data-i18n="resetSettings">Réinitialiser paramètres</button>
-            </div>
+            <button class="btn danger full" id="clearDataBtn" data-i18n="clearData">Supprimer données ajoutées</button>
           </section>
 
-          <section class="panel system-panel">
-            <h3 data-i18n="systemStatus">État du système</h3>
-            <div class="summary-list">
-              <div><span data-i18n="storage">Stockage</span><strong>LocalStorage</strong></div>
-              <div><span data-i18n="hosting">Hébergement</span><strong>GitHub Pages</strong></div>
-              <div><span data-i18n="version">Version</span><strong>v4 Settings</strong></div>
+          <section class="panel full-width">
+            <h3 data-i18n="professionalOptions">Options professionnelles ajoutées</h3>
+            <div class="feature-grid">
+              <div><strong data-i18n="realTheme">Thème réel</strong><p data-i18n="realThemeDesc">Le mode dark/light change toute l'interface.</p></div>
+              <div><strong data-i18n="realLang">Langue réelle</strong><p data-i18n="realLangDesc">Menus, titres, tableaux, boutons et statuts changent.</p></div>
+              <div><strong data-i18n="savedPrefs">Sauvegarde</strong><p data-i18n="savedPrefsDesc">Les préférences restent après fermeture du site.</p></div>
+              <div><strong data-i18n="adminActions">Actions admin</strong><p data-i18n="adminActionsDesc">Détails, modification, suppression et rapports.</p></div>
             </div>
           </section>
         </div>
@@ -355,35 +312,20 @@
   <div class="modal" id="routerModal">
     <form class="modal-card" id="routerForm">
       <button type="button" class="close-modal">×</button>
-      <h3 id="routerModalTitle">Ajouter routeur / ligne</h3>
+      <h3 id="routerModalTitle">Ajouter</h3>
       <input type="hidden" id="routerEditIndex" />
-      <label>N° Client
-        <input name="client" id="routerClientInput" required />
-      </label>
-      <label>Type
-        <select name="type" id="routerTypeInput" required>
-          <option>Fibre</option>
-          <option>Internet</option>
-          <option>Service</option>
-        </select>
-      </label>
-      <label>Débit
-        <select name="appel" id="routerSpeedInput" required>
-          <option value="100">100 Mbps</option>
-          <option value="50">50 Mbps</option>
-        </select>
-      </label>
-      <label>Adresse
-        <input name="adresse" id="routerAddressInput" required />
-      </label>
-      <button class="primary-btn" type="submit">Enregistrer</button>
+      <label><span data-i18n="clientNumber">N° Client</span><input name="client" id="routerClientInput" required /></label>
+      <label><span data-i18n="type">Type</span><select name="type" id="routerTypeInput"></select></label>
+      <label><span data-i18n="speed">Débit</span><select name="appel" id="routerSpeedInput"></select></label>
+      <label><span data-i18n="address">Adresse</span><input name="adresse" id="routerAddressInput" required /></label>
+      <button class="btn primary full" type="submit" data-i18n="save">Enregistrer</button>
     </form>
   </div>
 
   <div class="modal" id="detailModal">
     <div class="modal-card">
       <button type="button" class="close-modal">×</button>
-      <h3>Détails</h3>
+      <h3 data-i18n="details">Détails</h3>
       <div class="detail-box" id="detailContent"></div>
     </div>
   </div>
@@ -391,49 +333,24 @@
   <div class="modal" id="transferModal">
     <form class="modal-card" id="transferForm">
       <button type="button" class="close-modal">×</button>
-      <h3>Nouvelle demande de transfert</h3>
-      <label>Client / ligne
-        <select name="client" id="transferClient" required></select>
-      </label>
-      <label>Ancienne adresse
-        <input name="oldAddress" id="oldAddress" required />
-      </label>
-      <label>Nouvelle adresse
-        <input name="newAddress" placeholder="Nouvelle adresse" required />
-      </label>
-      <label>Remarque
-        <textarea name="note" placeholder="Ex: changement de bureau, déménagement..."></textarea>
-      </label>
-      <button class="primary-btn" type="submit">Enregistrer le transfert</button>
+      <h3 data-i18n="newTransfer">Nouvelle demande de transfert</h3>
+      <label><span data-i18n="clientLine">Client / ligne</span><select name="client" id="transferClient" required></select></label>
+      <label><span data-i18n="oldAddress">Ancienne adresse</span><input name="oldAddress" id="oldAddress" required /></label>
+      <label><span data-i18n="newAddress">Nouvelle adresse</span><input name="newAddress" id="newAddressInput" required /></label>
+      <label><span data-i18n="note">Remarque</span><textarea name="note" id="transferNote"></textarea></label>
+      <button class="btn primary full" type="submit" data-i18n="saveTransfer">Enregistrer le transfert</button>
     </form>
   </div>
 
   <div class="modal" id="problemModal">
     <form class="modal-card" id="problemForm">
       <button type="button" class="close-modal">×</button>
-      <h3>Signaler un problème</h3>
-      <label>Client / ligne
-        <select name="client" id="problemClient" required></select>
-      </label>
-      <label>Type de problème
-        <select name="type" required>
-          <option>Pas de connexion</option>
-          <option>Débit faible</option>
-          <option>Routeur non fonctionnel</option>
-          <option>Coupure fibre</option>
-        </select>
-      </label>
-      <label>Priorité
-        <select name="priority" required>
-          <option>Normale</option>
-          <option>Urgente</option>
-          <option>Critique</option>
-        </select>
-      </label>
-      <label>Description
-        <textarea name="description" placeholder="Détails du problème..."></textarea>
-      </label>
-      <button class="danger-btn" type="submit">Enregistrer le problème</button>
+      <h3 data-i18n="reportProblem">Signaler un problème</h3>
+      <label><span data-i18n="clientLine">Client / ligne</span><select name="client" id="problemClient" required></select></label>
+      <label><span data-i18n="problemType">Type de problème</span><select name="type" id="problemTypeSelect"></select></label>
+      <label><span data-i18n="priority">Priorité</span><select name="priority" id="prioritySelect"></select></label>
+      <label><span data-i18n="description">Description</span><textarea name="description" id="problemDescription"></textarea></label>
+      <button class="btn danger full" type="submit" data-i18n="saveProblem">Enregistrer le problème</button>
     </form>
   </div>
 

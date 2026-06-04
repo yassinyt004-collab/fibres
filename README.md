@@ -1,34 +1,17 @@
 # Dashboard Fibre - Commune de Tiznit
 
-Site statique prêt pour GitHub Pages.
-
-## Login demo
+## Demo login
 - Username: admin
 - Password: admin123
 
-## Fonctionnalités
-- Login admin + logout
-- Dashboard avec total routeurs, total charge, fibre, internet, problèmes
-- Admin peut ajouter, modifier, supprimer et voir détails des routeurs/lignes
-- Transferts: créer, voir détails, terminer, supprimer
-- Problèmes: créer, voir détails, résoudre, supprimer
-- Page rapports avec impression
-- Sauvegarde dans localStorage
+## Version professionnelle
+- Dark mode / White mode réellement appliqués sur toute l'interface
+- Couleur principale réellement modifiable
+- Langues réellement appliquées: Français, العربية, English
+- Traduction des menus, titres, tableaux, statuts, boutons et modals
+- Admin: détails, modification, suppression, rapports
+- Problèmes automatiques uniquement pour les lignes marquées en jaune: N° 2 et N° 17
+- Sauvegarde avec LocalStorage
 
-## Déploiement GitHub
-1. Décompressez le ZIP.
-2. Uploadez `index.html`, `style.css`, `script.js`, `README.md`.
-3. Activez GitHub Pages depuis Settings > Pages.
-
-- Détection automatique uniquement des lignes marquées en jaune: `7.2784793.00.00.100061` et le N° client manquant
-
-
-## Correction finale
-Le site force une mise à jour des données locales avec `APP_DATA_VERSION = yellow-only-v3` pour supprimer les anciens problèmes auto et garder seulement les lignes jaunes: N° 2 et N° 17.
-
-
-## Paramètres ajoutés
-- White mode / Dark mode
-- Langues: Français, العربية, English
-- Sauvegarde automatique des préférences
-- Reset des paramètres
+## GitHub Pages
+Uploadez `index.html`, `style.css`, `script.js`, `README.md` dans votre repository puis activez GitHub Pages.
