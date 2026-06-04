@@ -69,15 +69,28 @@ const autoDetectedProblems = initialLines
     date: 'Auto'
   }));
 
-if (!localStorage.getItem('fiberAutoProblemsAdded')) {
-  const existingKeys = new Set(problems.map(p => `${p.client}-${p.type}`));
-  autoDetectedProblems.forEach(p => {
-    const key = `${p.client}-${p.type}`;
-    if (!existingKeys.has(key)) problems.unshift(p);
-  });
-  localStorage.setItem('fiberAutoProblemsAdded', 'true');
+const APP_DATA_VERSION = 'yellow-only-v3';
+const previousVersion = localStorage.getItem('fiberAppDataVersion');
+
+function cleanAutoProblems(list) {
+  const autoTypes = [
+    'Format numéro client à vérifier',
+    'Ligne marquée en jaune à vérifier',
+    'N° client vide à compléter'
+  ];
+  return list.filter(p => !autoTypes.includes(p.type) && p.date !== 'Auto');
+}
+
+if (previousVersion !== APP_DATA_VERSION) {
+  lines = [...initialLines];
+  problems = cleanAutoProblems(problems);
+  autoDetectedProblems.forEach(p => problems.unshift(p));
+  localStorage.setItem('fiberAppDataVersion', APP_DATA_VERSION);
+  localStorage.setItem('fiberLines', JSON.stringify(lines));
   localStorage.setItem('fiberProblems', JSON.stringify(problems));
 }
+
+
 
 
 const $ = s => document.querySelector(s);
@@ -313,11 +326,10 @@ $('#clearDataBtn').addEventListener('click', () => {
     localStorage.removeItem('fiberLines');
     localStorage.removeItem('fiberTransfers');
     localStorage.removeItem('fiberProblems');
-    localStorage.removeItem('fiberAutoProblemsAdded');
+    localStorage.setItem('fiberAppDataVersion', APP_DATA_VERSION);
     lines = [...initialLines];
     transfers = [];
     problems = [...autoDetectedProblems];
-    localStorage.setItem('fiberAutoProblemsAdded', 'true');
     save();
     populateSelects();
     renderDashboard(); renderRouteurs(); renderTransfers(); renderProblems(); renderReports();

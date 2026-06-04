@@ -21,3 +21,7 @@ Site statique prêt pour GitHub Pages.
 3. Activez GitHub Pages depuis Settings > Pages.
 
 - Détection automatique uniquement des lignes marquées en jaune: `7.2784793.00.00.100061` et le N° client manquant
+
+
+## Correction finale
+Le site force une mise à jour des données locales avec `APP_DATA_VERSION = yellow-only-v3` pour supprimer les anciens problèmes auto et garder seulement les lignes jaunes: N° 2 et N° 17.
