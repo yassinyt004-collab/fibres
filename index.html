@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Fibre - Commune de Tiznit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <span></span><span></span><span></span>
+      </div>
+      <div>
+        <h1>FIBER</h1>
+        <p>Commune Tiznit</p>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-link active" data-page="dashboard"><span>⌂</span> Dashboard</button>
+      <button class="nav-link" data-page="routeurs"><span>▰</span> Routeurs</button>
+      <button class="nav-link" data-page="transferts"><span>⇄</span> Transferts</button>
+      <button class="nav-link" data-page="problemes"><span>⚠</span> Les problèmes</button>
+      <button class="nav-link" data-page="parametres"><span>⚙</span> Paramètres</button>
+    </nav>
+
+    <div class="user-box">
+      <div class="avatar">A</div>
+      <div>
+        <strong>Admin</strong>
+        <p>Administrateur</p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="left-top">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div>
+          <h2 id="pageTitle">Dashboard</h2>
+          <p id="pageSubtitle">Suivi des lignes fibre et internet</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="date-pill">📅 <span>04 Juin 2026</span></div>
+        <button class="primary-btn" id="quickTransfer">⇄ Demande de transfert</button>
+        <button class="notif">🔔<b>3</b></button>
+      </div>
+    </header>
+
+    <section class="page active" id="dashboard">
+      <div class="stats-grid">
+        <article class="stat-card blue">
+          <div class="stat-icon">👥</div>
+          <div><p>Total lignes</p><h3 id="totalLines">0</h3><small>Lignes enregistrées</small></div>
+          <svg viewBox="0 0 140 45"><path d="M0 35 C22 32,28 15,48 18 S76 38,100 22 S122 18,140 8"/></svg>
+        </article>
+        <article class="stat-card green">
+          <div class="stat-icon">🌐</div>
+          <div><p>Fibre optique</p><h3 id="fiberCount">0</h3><small>Abonnements fibre</small></div>
+          <svg viewBox="0 0 140 45"><path d="M0 35 C24 33,31 23,45 12 S74 35,96 19 S122 17,140 5"/></svg>
+        </article>
+        <article class="stat-card orange">
+          <div class="stat-icon">📶</div>
+          <div><p>Internet</p><h3 id="internetCount">0</h3><small>Abonnements internet</small></div>
+          <svg viewBox="0 0 140 45"><path d="M0 35 C22 30,33 19,50 18 S79 31,100 25 S120 30,140 14"/></svg>
+        </article>
+        <article class="stat-card red">
+          <div class="stat-icon">⚠</div>
+          <div><p>Problèmes</p><h3 id="problemCount">0</h3><small>Signalements actifs</small></div>
+          <svg viewBox="0 0 140 45"><path d="M0 35 C25 34,31 8,55 15 S83 35,106 19 S124 32,140 24"/></svg>
+        </article>
+      </div>
+
+      <div class="content-grid">
+        <section class="panel wide">
+          <div class="panel-head">
+            <h3>Dernières lignes fibre</h3>
+            <button class="ghost-btn" data-page-link="routeurs">Voir routeurs</button>
+          </div>
+          <div class="table-wrap"><table id="latestTable"></table></div>
+        </section>
+
+        <section class="panel transfer-card">
+          <h3>Transférer la fibre</h3>
+          <p>Utilisez cette option si vous changez l'emplacement de la fibre optique.</p>
+          <button class="transfer-btn" id="openTransfer">⇄ Transférer la fibre</button>
+          <div class="info-box">ℹ Cette action prépare une demande vers une nouvelle adresse.</div>
+        </section>
+
+        <section class="panel wide">
+          <div class="panel-head">
+            <h3>Clients / lignes en attente</h3>
+            <span class="badge soft">Données Excel</span>
+          </div>
+          <div class="table-wrap"><table id="waitingTable"></table></div>
+        </section>
+
+        <section class="panel quick-panel">
+          <h3>Raccourcis rapides</h3>
+          <div class="quick-grid">
+            <button data-page-link="routeurs">▰<span>Ajouter routeur</span></button>
+            <button id="shortcutTransfer">⇄<span>Nouveau transfert</span></button>
+            <button data-page-link="problemes">⚠<span>Signaler problème</span></button>
+            <button data-page-link="parametres">⚙<span>Paramètres</span></button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="page" id="routeurs">
+      <div class="panel full">
+        <div class="panel-head">
+          <div><h3>Liste des routeurs / lignes</h3><p>Toutes les lignes extraites du fichier Excel.</p></div>
+          <input class="search" id="routerSearch" placeholder="Rechercher par client, adresse..." />
+        </div>
+        <div class="table-wrap"><table id="routerTable"></table></div>
+      </div>
+    </section>
+
+    <section class="page" id="transferts">
+      <div class="panel full">
+        <div class="panel-head">
+          <div><h3>Demandes de transfert</h3><p>Changement de l'emplacement de la fibre optique.</p></div>
+          <button class="primary-btn" id="newTransferBtn">⇄ Nouvelle demande</button>
+        </div>
+        <div class="table-wrap"><table id="transferTable"></table></div>
+      </div>
+    </section>
+
+    <section class="page" id="problemes">
+      <div class="panel full">
+        <div class="panel-head">
+          <div><h3>Les problèmes</h3><p>Au lieu d'un graphique vide, cette page affiche les signalements clairement.</p></div>
+          <button class="danger-btn" id="addProblemBtn">⚠ Signaler un problème</button>
+        </div>
+        <div class="empty-state" id="noProblems">
+          <div>✅</div>
+          <h3>Aucun problème critique</h3>
+          <p>Ajoutez un signalement si une ligne fibre ou internet a un souci.</p>
+        </div>
+        <div class="table-wrap"><table id="problemTable"></table></div>
+      </div>
+    </section>
+
+    <section class="page" id="parametres">
+      <div class="settings-grid">
+        <section class="panel">
+          <h3>Informations du projet</h3>
+          <div class="settings-list">
+            <p><strong>Projet:</strong> Dashboard Fibre</p>
+            <p><strong>Organisation:</strong> Commune de Tiznit</p>
+            <p><strong>Mode:</strong> GitHub Pages / Static</p>
+            <p><strong>Source:</strong> Fichier Excel fourni</p>
+          </div>
+        </section>
+        <section class="panel">
+          <h3>Comment modifier les données</h3>
+          <p>Ouvrez <code>script.js</code>, puis modifiez les listes <code>mainLines</code>, <code>fiberSubscriptions</code> ou <code>internetSubscriptions</code>.</p>
+          <p>Les transferts et problèmes ajoutés dans le navigateur restent sauvegardés avec <code>localStorage</code>.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="transferModal">
+    <form class="modal-card" id="transferForm">
+      <button type="button" class="close-modal">×</button>
+      <h3>Nouvelle demande de transfert</h3>
+      <label>Client / ligne
+        <select name="client" id="transferClient" required></select>
+      </label>
+      <label>Ancienne adresse
+        <input name="oldAddress" id="oldAddress" required />
+      </label>
+      <label>Nouvelle adresse
+        <input name="newAddress" placeholder="Nouvelle adresse" required />
+      </label>
+      <label>Remarque
+        <textarea name="note" placeholder="Ex: changement de bureau, déménagement..."></textarea>
+      </label>
+      <button class="primary-btn" type="submit">Enregistrer le transfert</button>
+    </form>
+  </div>
+
+  <div class="modal" id="problemModal">
+    <form class="modal-card" id="problemForm">
+      <button type="button" class="close-modal">×</button>
+      <h3>Signaler un problème</h3>
+      <label>Client / ligne
+        <select name="client" id="problemClient" required></select>
+      </label>
+      <label>Type de problème
+        <select name="type" required>
+          <option>Pas de connexion</option>
+          <option>Débit faible</option>
+          <option>Routeur non fonctionnel</option>
+          <option>Coupure fibre</option>
+        </select>
+      </label>
+      <label>Priorité
+        <select name="priority" required>
+          <option>Normale</option>
+          <option>Urgente</option>
+          <option>Critique</option>
+        </select>
+      </label>
+      <label>Description
+        <textarea name="description" placeholder="Détails du problème..."></textarea>
+      </label>
+      <button class="danger-btn" type="submit">Enregistrer le problème</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
