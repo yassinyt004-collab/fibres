@@ -29,11 +29,17 @@
       <button class="nav-link" data-page="parametres"><span>⚙</span> Paramètres</button>
     </nav>
 
-    <div class="user-box">
-      <div class="avatar">A</div>
-      <div>
-        <strong>Admin</strong>
-        <p>Administrateur</p>
+    <div class="sidebar-foot">
+      <div class="mini-info">
+        <small>Mode</small>
+        <strong>Static / GitHub Pages</strong>
+      </div>
+      <div class="user-box">
+        <div class="avatar">A</div>
+        <div>
+          <strong>Admin</strong>
+          <p>Administrateur</p>
+        </div>
       </div>
     </div>
   </aside>
@@ -44,13 +50,13 @@
         <button class="menu-btn" id="menuBtn">☰</button>
         <div>
           <h2 id="pageTitle">Dashboard</h2>
-          <p id="pageSubtitle">Suivi des lignes fibre et internet</p>
+          <p id="pageSubtitle">Suivi pratique des lignes fibre et internet</p>
         </div>
       </div>
       <div class="top-actions">
         <div class="date-pill">📅 <span>04 Juin 2026</span></div>
         <button class="primary-btn" id="quickTransfer">⇄ Demande de transfert</button>
-        <button class="notif">🔔<b>3</b></button>
+        <button class="notif">🔔<b id="notifCount">0</b></button>
       </div>
     </header>
 
@@ -58,67 +64,132 @@
       <div class="stats-grid">
         <article class="stat-card blue">
           <div class="stat-icon">👥</div>
-          <div><p>Total lignes</p><h3 id="totalLines">0</h3><small>Lignes enregistrées</small></div>
-          <svg viewBox="0 0 140 45"><path d="M0 35 C22 32,28 15,48 18 S76 38,100 22 S122 18,140 8"/></svg>
+          <div class="stat-body">
+            <p>Total lignes</p>
+            <h3 id="totalLines">0</h3>
+            <small>Lignes réseau enregistrées</small>
+            <div class="mini-line"><span style="width:78%"></span></div>
+          </div>
         </article>
         <article class="stat-card green">
           <div class="stat-icon">🌐</div>
-          <div><p>Fibre optique</p><h3 id="fiberCount">0</h3><small>Abonnements fibre</small></div>
-          <svg viewBox="0 0 140 45"><path d="M0 35 C24 33,31 23,45 12 S74 35,96 19 S122 17,140 5"/></svg>
+          <div class="stat-body">
+            <p>Fibre optique</p>
+            <h3 id="fiberCount">0</h3>
+            <small>Abonnements fibre actifs</small>
+            <div class="mini-line"><span style="width:62%"></span></div>
+          </div>
         </article>
         <article class="stat-card orange">
           <div class="stat-icon">📶</div>
-          <div><p>Internet</p><h3 id="internetCount">0</h3><small>Abonnements internet</small></div>
-          <svg viewBox="0 0 140 45"><path d="M0 35 C22 30,33 19,50 18 S79 31,100 25 S120 30,140 14"/></svg>
+          <div class="stat-body">
+            <p>Internet</p>
+            <h3 id="internetCount">0</h3>
+            <small>Abonnements internet actifs</small>
+            <div class="mini-line"><span style="width:84%"></span></div>
+          </div>
         </article>
         <article class="stat-card red">
           <div class="stat-icon">⚠</div>
-          <div><p>Problèmes</p><h3 id="problemCount">0</h3><small>Signalements actifs</small></div>
-          <svg viewBox="0 0 140 45"><path d="M0 35 C25 34,31 8,55 15 S83 35,106 19 S124 32,140 24"/></svg>
+          <div class="stat-body">
+            <p>Problèmes ouverts</p>
+            <h3 id="problemCount">0</h3>
+            <small>Signalements à traiter</small>
+            <div class="mini-line"><span id="problemLine" style="width:18%"></span></div>
+          </div>
         </article>
       </div>
 
-      <div class="content-grid">
-        <section class="panel wide">
-          <div class="panel-head">
-            <h3>Dernières lignes fibre</h3>
-            <button class="ghost-btn" data-page-link="routeurs">Voir routeurs</button>
-          </div>
-          <div class="table-wrap"><table id="latestTable"></table></div>
-        </section>
+      <div class="dashboard-layout">
+        <div class="main-column">
+          <section class="panel">
+            <div class="panel-head wrap-mobile">
+              <div>
+                <h3>Dernières lignes du réseau</h3>
+                <p>Vue rapide sur les lignes principales importées depuis Excel.</p>
+              </div>
+              <div class="head-actions">
+                <button class="ghost-btn" data-page-link="routeurs">Voir toutes les lignes</button>
+              </div>
+            </div>
+            <div class="table-wrap"><table id="latestTable"></table></div>
+          </section>
 
-        <section class="panel transfer-card">
-          <h3>Transférer la fibre</h3>
-          <p>Utilisez cette option si vous changez l'emplacement de la fibre optique.</p>
-          <button class="transfer-btn" id="openTransfer">⇄ Transférer la fibre</button>
-          <div class="info-box">ℹ Cette action prépare une demande vers une nouvelle adresse.</div>
-        </section>
+          <section class="panel">
+            <div class="panel-head wrap-mobile">
+              <div>
+                <h3>Lignes 50 Mbps / attention</h3>
+                <p>Repérage rapide des lignes qui peuvent demander un suivi.</p>
+              </div>
+              <span class="badge soft" id="slowCountBadge">0 lignes</span>
+            </div>
+            <div class="table-wrap"><table id="waitingTable"></table></div>
+          </section>
 
-        <section class="panel wide">
-          <div class="panel-head">
-            <h3>Clients / lignes en attente</h3>
-            <span class="badge soft">Données Excel</span>
-          </div>
-          <div class="table-wrap"><table id="waitingTable"></table></div>
-        </section>
+          <section class="panel">
+            <div class="panel-head wrap-mobile">
+              <div>
+                <h3>Derniers transferts</h3>
+                <p>Historique récent des demandes de changement d'adresse.</p>
+              </div>
+              <button class="ghost-btn" data-page-link="transferts">Ouvrir les transferts</button>
+            </div>
+            <div class="table-wrap"><table id="miniTransferTable"></table></div>
+          </section>
+        </div>
 
-        <section class="panel quick-panel">
-          <h3>Raccourcis rapides</h3>
-          <div class="quick-grid">
-            <button data-page-link="routeurs">▰<span>Ajouter routeur</span></button>
-            <button id="shortcutTransfer">⇄<span>Nouveau transfert</span></button>
-            <button data-page-link="problemes">⚠<span>Signaler problème</span></button>
-            <button data-page-link="parametres">⚙<span>Paramètres</span></button>
-          </div>
-        </section>
+        <div class="side-column">
+          <section class="panel action-panel">
+            <h3>Transférer la fibre</h3>
+            <p>Créez une demande quand un client change d'adresse ou de bureau.</p>
+            <button class="transfer-btn" id="openTransfer">⇄ Transférer la fibre</button>
+            <div class="info-box">ℹ Le système remplit automatiquement l'ancienne adresse à partir de la ligne choisie.</div>
+          </section>
+
+          <section class="panel summary-panel">
+            <h3>Résumé réseau</h3>
+            <div class="summary-list">
+              <div><span>Lignes 100 Mbps</span><strong id="summary100">0</strong></div>
+              <div><span>Lignes 50 Mbps</span><strong id="summary50">0</strong></div>
+              <div><span>Demandes transfert</span><strong id="transferCount">0</strong></div>
+              <div><span>État global</span><strong class="ok-text">Stable</strong></div>
+            </div>
+          </section>
+
+          <section class="panel quick-panel">
+            <h3>Raccourcis rapides</h3>
+            <div class="quick-grid">
+              <button data-page-link="routeurs">▰<span>Voir routeurs</span></button>
+              <button id="shortcutTransfer">⇄<span>Nouveau transfert</span></button>
+              <button data-page-link="problemes">⚠<span>Signaler problème</span></button>
+              <button data-page-link="parametres">⚙<span>Paramètres</span></button>
+            </div>
+          </section>
+        </div>
       </div>
     </section>
 
     <section class="page" id="routeurs">
       <div class="panel full">
-        <div class="panel-head">
-          <div><h3>Liste des routeurs / lignes</h3><p>Toutes les lignes extraites du fichier Excel.</p></div>
-          <input class="search" id="routerSearch" placeholder="Rechercher par client, adresse..." />
+        <div class="panel-head wrap-mobile">
+          <div>
+            <h3>Liste des lignes / routeurs</h3>
+            <p>Recherche par client, adresse, débit ou type de ligne.</p>
+          </div>
+          <div class="filters-row">
+            <input class="search" id="routerSearch" placeholder="Rechercher par client, adresse..." />
+            <select class="search select-filter" id="typeFilter">
+              <option value="all">Tous les types</option>
+              <option value="Fibre">Fibre</option>
+              <option value="Internet">Internet</option>
+              <option value="Service">Service</option>
+            </select>
+            <select class="search select-filter" id="speedFilter">
+              <option value="all">Tous les débits</option>
+              <option value="100">100 Mbps</option>
+              <option value="50">50 Mbps</option>
+            </select>
+          </div>
         </div>
         <div class="table-wrap"><table id="routerTable"></table></div>
       </div>
@@ -126,8 +197,11 @@
 
     <section class="page" id="transferts">
       <div class="panel full">
-        <div class="panel-head">
-          <div><h3>Demandes de transfert</h3><p>Changement de l'emplacement de la fibre optique.</p></div>
+        <div class="panel-head wrap-mobile">
+          <div>
+            <h3>Demandes de transfert</h3>
+            <p>Gestion pratique des changements d'emplacement de la fibre.</p>
+          </div>
           <button class="primary-btn" id="newTransferBtn">⇄ Nouvelle demande</button>
         </div>
         <div class="table-wrap"><table id="transferTable"></table></div>
@@ -136,14 +210,17 @@
 
     <section class="page" id="problemes">
       <div class="panel full">
-        <div class="panel-head">
-          <div><h3>Les problèmes</h3><p>Au lieu d'un graphique vide, cette page affiche les signalements clairement.</p></div>
+        <div class="panel-head wrap-mobile">
+          <div>
+            <h3>Les problèmes</h3>
+            <p>Tableau clair des signalements au lieu d'un graphique vide.</p>
+          </div>
           <button class="danger-btn" id="addProblemBtn">⚠ Signaler un problème</button>
         </div>
         <div class="empty-state" id="noProblems">
           <div>✅</div>
-          <h3>Aucun problème critique</h3>
-          <p>Ajoutez un signalement si une ligne fibre ou internet a un souci.</p>
+          <h3>Aucun problème ouvert</h3>
+          <p>Ajoutez un signalement si une ligne fibre ou internet rencontre un souci.</p>
         </div>
         <div class="table-wrap"><table id="problemTable"></table></div>
       </div>
@@ -154,16 +231,21 @@
         <section class="panel">
           <h3>Informations du projet</h3>
           <div class="settings-list">
-            <p><strong>Projet:</strong> Dashboard Fibre</p>
-            <p><strong>Organisation:</strong> Commune de Tiznit</p>
-            <p><strong>Mode:</strong> GitHub Pages / Static</p>
-            <p><strong>Source:</strong> Fichier Excel fourni</p>
+            <p><strong>Projet :</strong> Dashboard Fibre</p>
+            <p><strong>Organisation :</strong> Commune de Tiznit</p>
+            <p><strong>Technologie :</strong> HTML / CSS / JavaScript</p>
+            <p><strong>Source :</strong> Données extraites du fichier Excel</p>
           </div>
         </section>
         <section class="panel">
-          <h3>Comment modifier les données</h3>
-          <p>Ouvrez <code>script.js</code>, puis modifiez les listes <code>mainLines</code>, <code>fiberSubscriptions</code> ou <code>internetSubscriptions</code>.</p>
-          <p>Les transferts et problèmes ajoutés dans le navigateur restent sauvegardés avec <code>localStorage</code>.</p>
+          <h3>Fonctions pratiques ajoutées</h3>
+          <ul class="feature-list">
+            <li>Recherche et filtres sur les routeurs</li>
+            <li>Création de transferts avec remplissage automatique de l'ancienne adresse</li>
+            <li>Signalement de problèmes avec priorité</li>
+            <li>Stockage local des transferts et problèmes</li>
+            <li>Actions terminer / supprimer pour mieux gérer le suivi</li>
+          </ul>
         </section>
       </div>
     </section>

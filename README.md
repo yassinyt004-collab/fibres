@@ -1,35 +1,16 @@
 # Dashboard Fibre - Commune de Tiznit
 
-Site static HTML/CSS/JavaScript pour gérer un dashboard des lignes fibre/internet.
+Site statique prêt pour GitHub Pages.
 
 ## Contenu
+- Dashboard responsive
+- Routeurs avec recherche + filtres
+- Transferts avec ajout, clôture et suppression
+- Problèmes avec priorité, résolution et suppression
+- Sauvegarde locale via localStorage
 
-- `index.html` : structure du site
-- `style.css` : design responsive moderne
-- `script.js` : données extraites du fichier Excel + interactions
-
-## Pages incluses
-
-- Dashboard
-- Routeurs
-- Transferts
-- Les problèmes
-- Paramètres
-
-## Utilisation avec GitHub Pages
-
-1. Créez un repository GitHub.
-2. Uploadez les fichiers `index.html`, `style.css`, `script.js`, `README.md`.
-3. Allez dans `Settings > Pages`.
-4. Choisissez `Deploy from a branch` puis `main` et `/root`.
-5. Ouvrez le lien GitHub Pages généré.
-
-## Modifier les données
-
-Les données principales sont dans `script.js` :
-
-- `mainLines`
-- `fiberSubscriptions`
-- `internetSubscriptions`
-
-Les transferts et problèmes ajoutés depuis le navigateur sont stockés en `localStorage`.
+## Déploiement GitHub
+1. Décompressez le ZIP.
+2. Uploadez les fichiers dans votre dépôt GitHub.
+3. Activez GitHub Pages depuis Settings > Pages.
+4. Choisissez la branche `main` et le dossier `/root`.
