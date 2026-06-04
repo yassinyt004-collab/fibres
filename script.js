@@ -54,13 +54,17 @@ let lines = JSON.parse(localStorage.getItem('fiberLines') || 'null') || initialL
 let transfers = JSON.parse(localStorage.getItem('fiberTransfers') || '[]');
 let problems = JSON.parse(localStorage.getItem('fiberProblems') || '[]');
 
+const autoProblemClients = new Set(['7.2784793.00.00.100061', '-']);
+
 const autoDetectedProblems = initialLines
-  .filter(line => String(line.client).includes('.00.00.'))
+  .filter(line => autoProblemClients.has(String(line.client)))
   .map(line => ({
-    client: line.client,
-    type: 'Format numéro client à vérifier',
+    client: line.client === '-' ? 'N° client manquant' : line.client,
+    type: line.client === '-' ? 'N° client vide à compléter' : 'Ligne marquée en jaune à vérifier',
     priority: 'Urgente',
-    description: `Le numéro client contient la forme longue avec 00.00. Adresse: ${line.adresse}`,
+    description: line.client === '-'
+      ? `Le N° Client est vide/manquant. Adresse: ${line.adresse}`
+      : `Cette ligne est marquée en jaune dans le fichier Excel. Adresse: ${line.adresse}`,
     status: 'Ouvert',
     date: 'Auto'
   }));
@@ -195,7 +199,7 @@ function renderRouteurs(){
       <tr>
         <td>${l.num}</td><td><strong>${l.client}</strong></td>
         <td>${badge(l.type, l.type === 'Fibre' ? 'ok' : l.type === 'Internet' ? 'run' : 'soft')}</td>
-        <td>${l.appel} Mbps</td><td>${l.adresse}</td><td>${String(l.client).includes('.00.00.') ? badge('À vérifier','critical') : badge('Actif','ok')}</td>
+        <td>${l.appel} Mbps</td><td>${l.adresse}</td><td>${autoProblemClients.has(String(l.client)) ? badge('À vérifier','critical') : badge('Actif','ok')}</td>
         <td>
           <button class="table-action details" data-router-details="${i}">Détails</button>
           <button class="table-action edit" data-router-edit="${i}">Modifier</button>
@@ -380,7 +384,7 @@ document.addEventListener('click', e => {
 
   if(rDetails){
     const l = lines[Number(rDetails.dataset.routerDetails)];
-    detail('Détails routeur', [['N°', l.num], ['Client', l.client], ['Type', l.type], ['Débit', l.appel + ' Mbps'], ['Adresse', l.adresse], ['État', String(l.client).includes('.00.00.') ? 'À vérifier' : 'Actif']]);
+    detail('Détails routeur', [['N°', l.num], ['Client', l.client], ['Type', l.type], ['Débit', l.appel + ' Mbps'], ['Adresse', l.adresse], ['État', autoProblemClients.has(String(l.client)) ? 'À vérifier' : 'Actif']]);
   }
   if(rEdit){
     const i = Number(rEdit.dataset.routerEdit);
