@@ -19,3 +19,5 @@ Site statique prêt pour GitHub Pages.
 1. Décompressez le ZIP.
 2. Uploadez `index.html`, `style.css`, `script.js`, `README.md`.
 3. Activez GitHub Pages depuis Settings > Pages.
+
+- Détection automatique des numéros client longs contenant `00.00` comme problèmes à vérifier

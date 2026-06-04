@@ -1,11 +1,11 @@
 const initialLines = [
-  {num:1, client:'100054', appel:'100', adresse:'CONSERVAT, RAISS BLAID-IRAQ EL FATH', type:'Fibre'},
-  {num:2, client:'100061', appel:'100', adresse:'PISCINE COMMUNAL', type:'Fibre'},
-  {num:3, client:'100062', appel:'100', adresse:'CAMPING COMMUNAL', type:'Fibre'},
-  {num:4, client:'100067', appel:'100', adresse:'CT AIT MOUSSA OUAMER QT AGLOU', type:'Fibre'},
-  {num:5, client:'100068', appel:'100', adresse:'CT ADMINE QT IDZKRI', type:'Fibre'},
-  {num:6, client:'100072', appel:'100', adresse:'CT MOUKRI NAMAHE HAY TARGA', type:'Fibre'},
-  {num:7, client:'100075', appel:'100', adresse:'CT MOUKRI NOUREDDINE QT AGLOU', type:'Fibre'},
+  {num:1, client:'7.2784793.00.00.100054', appel:'100', adresse:'CONSERVAT, RAISS BLAID-IRAQ EL FATH', type:'Fibre'},
+  {num:2, client:'7.2784793.00.00.100061', appel:'100', adresse:'PISCINE COMMUNAL', type:'Fibre'},
+  {num:3, client:'7.2784793.00.00.100062', appel:'100', adresse:'CAMPING COMMUNAL', type:'Fibre'},
+  {num:4, client:'100067', appel:'100', adresse:'SEIGE COMMUNE BD HASSAN 2', type:'Fibre'},
+  {num:5, client:'100068', appel:'100', adresse:'Bureau RESSOURCE HUMAINE', type:'Fibre'},
+  {num:6, client:'100072', appel:'100', adresse:'BUREAU SOUK HEBDOMADAIRE', type:'Fibre'},
+  {num:7, client:'100075', appel:'100', adresse:'SIEGE COMMUNAL BD.HASSAN 2', type:'Fibre'},
   {num:8, client:'100078', appel:'100', adresse:'CT. AMOURI MBAREK HAY BOUTAKOURT', type:'Fibre'},
   {num:9, client:'100079', appel:'100', adresse:'CT.EDUCT ROUTIERE RT AGADIR', type:'Fibre'},
   {num:10, client:'100043', appel:'100', adresse:'CT ALI INJARN HAY TAMDROUSTE', type:'Fibre'},
@@ -53,6 +53,28 @@ const internetSubscriptions = [
 let lines = JSON.parse(localStorage.getItem('fiberLines') || 'null') || initialLines;
 let transfers = JSON.parse(localStorage.getItem('fiberTransfers') || '[]');
 let problems = JSON.parse(localStorage.getItem('fiberProblems') || '[]');
+
+const autoDetectedProblems = initialLines
+  .filter(line => String(line.client).includes('.00.00.'))
+  .map(line => ({
+    client: line.client,
+    type: 'Format numéro client à vérifier',
+    priority: 'Urgente',
+    description: `Le numéro client contient la forme longue avec 00.00. Adresse: ${line.adresse}`,
+    status: 'Ouvert',
+    date: 'Auto'
+  }));
+
+if (!localStorage.getItem('fiberAutoProblemsAdded')) {
+  const existingKeys = new Set(problems.map(p => `${p.client}-${p.type}`));
+  autoDetectedProblems.forEach(p => {
+    const key = `${p.client}-${p.type}`;
+    if (!existingKeys.has(key)) problems.unshift(p);
+  });
+  localStorage.setItem('fiberAutoProblemsAdded', 'true');
+  localStorage.setItem('fiberProblems', JSON.stringify(problems));
+}
+
 
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
@@ -173,7 +195,7 @@ function renderRouteurs(){
       <tr>
         <td>${l.num}</td><td><strong>${l.client}</strong></td>
         <td>${badge(l.type, l.type === 'Fibre' ? 'ok' : l.type === 'Internet' ? 'run' : 'soft')}</td>
-        <td>${l.appel} Mbps</td><td>${l.adresse}</td><td>${badge('Actif','ok')}</td>
+        <td>${l.appel} Mbps</td><td>${l.adresse}</td><td>${String(l.client).includes('.00.00.') ? badge('À vérifier','critical') : badge('Actif','ok')}</td>
         <td>
           <button class="table-action details" data-router-details="${i}">Détails</button>
           <button class="table-action edit" data-router-edit="${i}">Modifier</button>
@@ -287,9 +309,11 @@ $('#clearDataBtn').addEventListener('click', () => {
     localStorage.removeItem('fiberLines');
     localStorage.removeItem('fiberTransfers');
     localStorage.removeItem('fiberProblems');
+    localStorage.removeItem('fiberAutoProblemsAdded');
     lines = [...initialLines];
     transfers = [];
-    problems = [];
+    problems = [...autoDetectedProblems];
+    localStorage.setItem('fiberAutoProblemsAdded', 'true');
     save();
     populateSelects();
     renderDashboard(); renderRouteurs(); renderTransfers(); renderProblems(); renderReports();
@@ -356,7 +380,7 @@ document.addEventListener('click', e => {
 
   if(rDetails){
     const l = lines[Number(rDetails.dataset.routerDetails)];
-    detail('Détails routeur', [['N°', l.num], ['Client', l.client], ['Type', l.type], ['Débit', l.appel + ' Mbps'], ['Adresse', l.adresse], ['État', 'Actif']]);
+    detail('Détails routeur', [['N°', l.num], ['Client', l.client], ['Type', l.type], ['Débit', l.appel + ' Mbps'], ['Adresse', l.adresse], ['État', String(l.client).includes('.00.00.') ? 'À vérifier' : 'Actif']]);
   }
   if(rEdit){
     const i = Number(rEdit.dataset.routerEdit);
