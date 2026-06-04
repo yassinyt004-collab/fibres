@@ -2,15 +2,20 @@
 
 Site statique prêt pour GitHub Pages.
 
-## Contenu
-- Dashboard responsive
-- Routeurs avec recherche + filtres
-- Transferts avec ajout, clôture et suppression
-- Problèmes avec priorité, résolution et suppression
-- Sauvegarde locale via localStorage
+## Login demo
+- Username: admin
+- Password: admin123
+
+## Fonctionnalités
+- Login admin + logout
+- Dashboard avec total routeurs, total charge, fibre, internet, problèmes
+- Admin peut ajouter, modifier, supprimer et voir détails des routeurs/lignes
+- Transferts: créer, voir détails, terminer, supprimer
+- Problèmes: créer, voir détails, résoudre, supprimer
+- Page rapports avec impression
+- Sauvegarde dans localStorage
 
 ## Déploiement GitHub
 1. Décompressez le ZIP.
-2. Uploadez les fichiers dans votre dépôt GitHub.
+2. Uploadez `index.html`, `style.css`, `script.js`, `README.md`.
 3. Activez GitHub Pages depuis Settings > Pages.
-4. Choisissez la branche `main` et le dossier `/root`.
