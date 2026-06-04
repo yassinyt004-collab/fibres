@@ -48,12 +48,12 @@
       </div>
 
       <nav class="nav">
-        <button class="nav-link active" data-page="dashboard"><span>⌂</span> Dashboard</button>
-        <button class="nav-link" data-page="routeurs"><span>▰</span> Routeurs</button>
-        <button class="nav-link" data-page="transferts"><span>⇄</span> Transferts</button>
-        <button class="nav-link" data-page="problemes"><span>⚠</span> Les problèmes</button>
-        <button class="nav-link" data-page="rapports"><span>📄</span> Rapports</button>
-        <button class="nav-link" data-page="parametres"><span>⚙</span> Paramètres</button>
+        <button class="nav-link active" data-page="dashboard"><span>⌂</span> <em data-i18n="navDashboard">Dashboard</em></button>
+        <button class="nav-link" data-page="routeurs"><span>▰</span> <em data-i18n="navRouters">Routeurs</em></button>
+        <button class="nav-link" data-page="transferts"><span>⇄</span> <em data-i18n="navTransfers">Transferts</em></button>
+        <button class="nav-link" data-page="problemes"><span>⚠</span> <em data-i18n="navProblems">Les problèmes</em></button>
+        <button class="nav-link" data-page="rapports"><span>📄</span> <em data-i18n="navReports">Rapports</em></button>
+        <button class="nav-link" data-page="parametres"><span>⚙</span> <em data-i18n="navSettings">Paramètres</em></button>
       </nav>
 
       <div class="sidebar-foot">
@@ -83,9 +83,9 @@
         </div>
         <div class="top-actions">
           <div class="date-pill">📅 <span>04 Juin 2026</span></div>
-          <button class="primary-btn" id="quickTransfer">⇄ Demande de transfert</button>
+          <button class="primary-btn" id="quickTransfer">⇄ <span data-i18n="transferRequest">Demande de transfert</span></button>
           <button class="notif" data-page-link="problemes">🔔<b id="notifCount">0</b></button>
-          <button class="logout-btn" id="logoutBtn">Logout</button>
+          <button class="logout-btn" id="logoutBtn" data-i18n="logout">Logout</button>
         </div>
       </header>
 
@@ -305,13 +305,47 @@
             </div>
           </section>
           <section class="panel">
-            <h3>Compte admin demo</h3>
+            <h3 data-i18n="settingsAppearance">Apparence & langue</h3>
+            <div class="settings-controls">
+              <label>
+                <span data-i18n="themeMode">Mode d'affichage</span>
+                <select id="themeSelect" class="search">
+                  <option value="light">White mode</option>
+                  <option value="dark">Dark mode</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="language">Langue</span>
+                <select id="languageSelect" class="search">
+                  <option value="fr">Français</option>
+                  <option value="ar">العربية</option>
+                  <option value="en">English</option>
+                </select>
+              </label>
+            </div>
+            <div class="settings-note" data-i18n="settingsSaved">Les préférences sont sauvegardées automatiquement.</div>
+          </section>
+
+          <section class="panel">
+            <h3 data-i18n="adminAccount">Compte admin demo</h3>
             <div class="settings-list">
               <p><strong>Username :</strong> admin</p>
               <p><strong>Password :</strong> admin123</p>
-              <p><strong>Remarque :</strong> login front-end فقط للعرض، ماشي حماية حقيقية بحال PHP/Backend.</p>
+              <p><strong data-i18n="note">Remarque :</strong> <span data-i18n="loginNote">login front-end فقط للعرض، ماشي حماية حقيقية بحال PHP/Backend.</span></p>
             </div>
-            <button class="danger-btn" id="clearDataBtn">Supprimer données ajoutées</button>
+            <div class="settings-actions">
+              <button class="danger-btn" id="clearDataBtn" data-i18n="clearData">Supprimer données ajoutées</button>
+              <button class="ghost-btn" id="resetSettingsBtn" data-i18n="resetSettings">Réinitialiser paramètres</button>
+            </div>
+          </section>
+
+          <section class="panel system-panel">
+            <h3 data-i18n="systemStatus">État du système</h3>
+            <div class="summary-list">
+              <div><span data-i18n="storage">Stockage</span><strong>LocalStorage</strong></div>
+              <div><span data-i18n="hosting">Hébergement</span><strong>GitHub Pages</strong></div>
+              <div><span data-i18n="version">Version</span><strong>v4 Settings</strong></div>
+            </div>
           </section>
         </div>
       </section>

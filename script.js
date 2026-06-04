@@ -97,13 +97,70 @@ const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
 const pageTitles = {
-  dashboard: ['Dashboard', 'Suivi pratique des lignes fibre et internet'],
-  routeurs: ['Routeurs', 'Recherche, détails, modification et suppression'],
-  transferts: ['Transferts', "Demandes de changement d'emplacement"],
-  problemes: ['Les problèmes', 'Signalements et suivi des pannes'],
-  rapports: ['Rapports', 'Résumé général et rapport des problèmes'],
-  parametres: ['Paramètres', 'Configuration du projet']
+  dashboard: {fr:['Dashboard','Suivi pratique des lignes fibre et internet'], ar:['لوحة التحكم','تتبع عملي لخطوط الألياف والإنترنت'], en:['Dashboard','Practical tracking of fiber and internet lines']},
+  routeurs: {fr:['Routeurs','Recherche, détails, modification et suppression'], ar:['الراوترات','بحث، تفاصيل، تعديل وحذف'], en:['Routers','Search, details, edit and delete']},
+  transferts: {fr:['Transferts',"Demandes de changement d'emplacement"], ar:['التحويلات','طلبات تغيير مكان الألياف'], en:['Transfers','Fiber location change requests']},
+  problemes: {fr:['Les problèmes','Signalements et suivi des pannes'], ar:['المشاكل','التبليغات وتتبع الأعطال'], en:['Problems','Issue reports and outage tracking']},
+  rapports: {fr:['Rapports','Résumé général et rapport des problèmes'], ar:['التقارير','ملخص عام وتقرير المشاكل'], en:['Reports','General summary and problems report']},
+  parametres: {fr:['Paramètres','Configuration du projet'], ar:['الإعدادات','إعدادات المشروع'], en:['Settings','Project configuration']}
 };
+
+
+const translations = {
+  fr: {
+    navDashboard:'Dashboard', navRouters:'Routeurs', navTransfers:'Transferts', navProblems:'Les problèmes', navReports:'Rapports', navSettings:'Paramètres',
+    transferRequest:'Demande de transfert', logout:'Logout', settingsAppearance:'Apparence & langue', themeMode:"Mode d'affichage",
+    language:'Langue', settingsSaved:'Les préférences sont sauvegardées automatiquement.', adminAccount:'Compte admin demo',
+    note:'Remarque :', loginNote:'login front-end فقط للعرض، ماشي حماية حقيقية بحال PHP/Backend.', clearData:'Supprimer données ajoutées',
+    resetSettings:'Réinitialiser paramètres', systemStatus:'État du système', storage:'Stockage', hosting:'Hébergement', version:'Version'
+  },
+  ar: {
+    navDashboard:'لوحة التحكم', navRouters:'الراوترات', navTransfers:'التحويلات', navProblems:'المشاكل', navReports:'التقارير', navSettings:'الإعدادات',
+    transferRequest:'طلب تحويل', logout:'تسجيل الخروج', settingsAppearance:'المظهر واللغة', themeMode:'وضع العرض',
+    language:'اللغة', settingsSaved:'يتم حفظ الإعدادات تلقائياً.', adminAccount:'حساب المدير التجريبي',
+    note:'ملاحظة:', loginNote:'تسجيل الدخول هنا للعرض فقط، وليس حماية حقيقية مثل Backend/PHP.', clearData:'حذف البيانات المضافة',
+    resetSettings:'إرجاع الإعدادات', systemStatus:'حالة النظام', storage:'التخزين', hosting:'الاستضافة', version:'الإصدار'
+  },
+  en: {
+    navDashboard:'Dashboard', navRouters:'Routers', navTransfers:'Transfers', navProblems:'Problems', navReports:'Reports', navSettings:'Settings',
+    transferRequest:'Transfer request', logout:'Logout', settingsAppearance:'Appearance & language', themeMode:'Display mode',
+    language:'Language', settingsSaved:'Preferences are saved automatically.', adminAccount:'Demo admin account',
+    note:'Note:', loginNote:'Front-end login is for demo only, not real protection like PHP/Backend.', clearData:'Delete added data',
+    resetSettings:'Reset settings', systemStatus:'System status', storage:'Storage', hosting:'Hosting', version:'Version'
+  }
+};
+
+let currentLang = localStorage.getItem('fiberLang') || 'fr';
+let currentTheme = localStorage.getItem('fiberTheme') || 'light';
+
+function applyTheme(theme){
+  currentTheme = theme;
+  document.body.classList.toggle('dark', theme === 'dark');
+  localStorage.setItem('fiberTheme', theme);
+  const select = $('#themeSelect');
+  if(select) select.value = theme;
+}
+
+function applyLanguage(lang){
+  currentLang = lang;
+  localStorage.setItem('fiberLang', lang);
+  document.documentElement.lang = lang;
+  document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  const select = $('#languageSelect');
+  if(select) select.value = lang;
+  $$('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if(translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  const active = document.querySelector('.page.active')?.id || 'dashboard';
+  updateTitle(active);
+}
+
+function updateTitle(page){
+  const t = pageTitles[page][currentLang] || pageTitles[page].fr;
+  $('#pageTitle').textContent = t[0];
+  $('#pageSubtitle').textContent = t[1];
+}
 
 function badge(text, type='soft') {
   return `<span class="badge ${type}">${text}</span>`;
@@ -138,14 +195,18 @@ $('#loginForm').addEventListener('submit', e => {
   if(user === 'admin' && pass === 'admin123'){
     sessionStorage.setItem('fiberAdminLogged', 'true');
     $('#loginError').textContent = '';
-    checkAuth();
+    applyTheme(currentTheme);
+applyLanguage(currentLang);
+checkAuth();
   }else{
     $('#loginError').textContent = 'Nom utilisateur ou mot de passe incorrect.';
   }
 });
 function logout(){
   sessionStorage.removeItem('fiberAdminLogged');
-  checkAuth();
+  applyTheme(currentTheme);
+applyLanguage(currentLang);
+checkAuth();
 }
 $('#logoutBtn').addEventListener('click', logout);
 $('#logoutMini').addEventListener('click', logout);
@@ -294,8 +355,7 @@ function switchPage(page){
   $$('.page').forEach(p => p.classList.remove('active'));
   $(`#${page}`).classList.add('active');
   $$('.nav-link').forEach(b => b.classList.toggle('active', b.dataset.page === page));
-  $('#pageTitle').textContent = pageTitles[page][0];
-  $('#pageSubtitle').textContent = pageTitles[page][1];
+  updateTitle(page);
   $('#sidebar').classList.remove('open');
   if(page === 'routeurs') renderRouteurs();
   if(page === 'transferts') renderTransfers();
@@ -429,6 +489,8 @@ document.addEventListener('click', e => {
   if(pDelete){ problems.splice(Number(pDelete.dataset.problemDelete), 1); save(); renderProblems(); renderDashboard(); }
 });
 
+applyTheme(currentTheme);
+applyLanguage(currentLang);
 checkAuth();
 populateSelects();
 renderDashboard();

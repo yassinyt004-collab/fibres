@@ -25,3 +25,10 @@ Site statique prêt pour GitHub Pages.
 
 ## Correction finale
 Le site force une mise à jour des données locales avec `APP_DATA_VERSION = yellow-only-v3` pour supprimer les anciens problèmes auto et garder seulement les lignes jaunes: N° 2 et N° 17.
+
+
+## Paramètres ajoutés
+- White mode / Dark mode
+- Langues: Français, العربية, English
+- Sauvegarde automatique des préférences
+- Reset des paramètres
